@@ -77,5 +77,8 @@ wav, sample_rate = tf.audio.decode_wav(file_contents, desired_channels=1)
 wav = tf.squeeze(wav, axis=-1)
 sample_rate = tf.cast(sample_rate, dtype=tf.int64)
 # Goes from 44100Hz to 16000hz - amplitude of the audio signal
+wav = tf.contrib.ffmpeg.decode_audio(wav, file_format='wav', samples_per_second=sample_rate,
+                                         channel_count=1)
+
 wav = tfio.audio.resample(wav, rate_in=sample_rate, rate_out=16000)
 return wav
