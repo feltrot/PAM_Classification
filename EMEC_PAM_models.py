@@ -81,4 +81,10 @@ wav = tf.contrib.ffmpeg.decode_audio(wav, file_format='wav', samples_per_second=
                                          channel_count=1)
 
 wav = tfio.audio.resample(wav, rate_in=sample_rate, rate_out=16000)
-return wav
+# return wav
+
+
+
+
+
+
