@@ -28,7 +28,7 @@ parameters = {'method':'request',
             'dpo_audioFormatConversion':1,
             'dpo_hydrophoneDataDiversionMode':'OD',
             'extension':'wav',                  # wav file
-            'dateFrom':'2014-09-01T00:00:00.000Z',  # The datetime of the first data point (From Date)
+            'dateFrom':'2015-06-01T00:00:00.000Z',  # The datetime of the first data point (From Date)
             'dateTo':'2015-09-01T00:00:00.000Z'}    # The datetime of the last data point (To Date)
             #'dpo_qualityControl':1,             # The Quality Control data product option - See https://wiki.oceannetworks.ca/display/DP/1
             #'dpo_resample':'none',              # The Resampling data product option - See https://wiki.oceannetworks.ca/display/DP/1
@@ -71,13 +71,13 @@ else:
 # =====================
 
 # results in:
-'dpRequestId': 16862264
+'dpRequestId': 16863202
 
 ## now request the data
 url = 'https://data.oceannetworks.ca/api/dataProductDelivery'      
 parameters = {'method':'run',
             'token':'9f536fe9-d2e8-4508-a92e-48c6d931b97f',              # replace YOUR_TOKEN_HERE with your personal token obtained from the 'Web Services API' tab at https://data.oceannetworks.ca/Profile when logged in.
-           'dpRequestId':16862264}     # replace YOUR_REQUEST_ID_HERE with a requestId number returned from the request method
+           'dpRequestId':16863202}     # replace YOUR_REQUEST_ID_HERE with a requestId number returned from the request method
 response = requests.get(url,params=parameters)
   
 if (response.ok):
@@ -99,7 +99,7 @@ else:
 # =====================
 
 # results in:
-'dpRunId':36642238
+'dpRunId':36643568
 
 ## now download the data
 import requests
@@ -112,12 +112,12 @@ import errno
 url = 'https://data.oceannetworks.ca/api/dataProductDelivery'
 parameters = {'method':'download',
             'token':'9f536fe9-d2e8-4508-a92e-48c6d931b97f',   # replace YOUR_TOKEN_HERE with your personal token obtained from the 'Web Services API' tab at https://data.oceannetworks.ca/Profile when logged in..
-            'dpRunId':36642238,       # replace YOUR_RUN_ID with the dpRunId returned from the 'run' method.
+            'dpRunId':36643568,       # replace YOUR_RUN_ID with the dpRunId returned from the 'run' method.
             'index':1}                   # for run requests that contain more than one file, change the index number to the index of the file you would like to download.
                                            # If the index number does not exist an HTTP 410 and a message will be returned.
  
  
-outPath='d:/'                        # replace with the file location you would like the file to be downloaded to.
+outPath='/Users/felixtrotter/Documents/EMEC/Acoustics/Data_Acoustics'                        # replace with the file location you would like the file to be downloaded to.
  
 with closing(requests.get(url,params=parameters,stream=True)) as streamResponse:
     if streamResponse.status_code == 200: #OK
