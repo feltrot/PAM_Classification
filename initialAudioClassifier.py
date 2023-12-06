@@ -1,5 +1,5 @@
 
-## initial code to create a audio classification model with 10 different classes
+## initial code to create a audio classification model with 4 different classes
 
 # Note: these may not be the most efficient models, but are a start
 # ========================================================================
@@ -23,9 +23,9 @@ from tensorflow.keras import layers, models
 
 # Function to extract features from audio files using librosa
 def extract_features(file_path):
-    audio, _ = librosa.load(file_path, res_type='kaiser_fast', duration=2.5, sr=22050*2, 
-                            offset=0.5)
-    mfccs = librosa.feature.mfcc(y=audio, sr=22050*2, n_mfcc=13)
+    audio, _ = librosa.load(file_path, duration=2.5, sr=16000, 
+                            offset=0.5)#, res_type='kaiser_fast')
+    mfccs = librosa.feature.mfcc(y=audio, sr=16000, n_mfcc=13)
     return mfccs
 
 # Function to load and preprocess the dataset
@@ -106,8 +106,8 @@ from tensorflow.keras import layers, models, utils
 # Function to extract features from audio file
 def extract_features(file_path):
     try:
-        audio_data, _ = librosa.load(file_path, res_type='kaiser_fast')
-        mfccs = librosa.feature.mfcc(y=audio_data, sr=22050, n_mfcc=13)
+        audio_data, _ = librosa.load(file_path)#, res_type='kaiser_fast')
+        mfccs = librosa.feature.mfcc(y=audio_data, sr=16000, n_mfcc=13)
         return np.mean(mfccs.T, axis=0)
     except Exception as e:
         print("Error encountered while parsing file: ", file_path)
@@ -120,7 +120,9 @@ def load_data(directory):
     for filename in os.listdir(directory):
         if filename.endswith(".wav"):
             file_path = os.path.join(directory, filename)
-            class_label = directory.split('/')[-1]  # Assuming the class label is the last part of the directory path
+            class_label = directory.split('/')[-1]  # Assuming the class 
+                                                    #label is the last part of 
+                                                    # the directory path
             data = extract_features(file_path)
             if data is not None:
                 features.append(data)
@@ -128,27 +130,36 @@ def load_data(directory):
     return features, labels
 
 # Directory paths for your datasets
-class1_dir = 'path/to/class1_dataset'
-class2_dir = 'path/to/class2_dataset'
-class3_dir = 'path/to/class3_dataset'
-class4_dir = 'path/to/class4_dataset'
+class1_HP = os.path.join('Documents', 'EMEC', 'Acoustics', 'Data_Acoustics', 
+                         'HarbourPorpoise')
+class2_PWS = os.path.join('Documents', 'EMEC', 'Acoustics', 'Data_Acoustics', 
+                          'pacificWhiteSided')
+class3_Minke = os.path.join('Documents', 'EMEC', 'Acoustics', 'Data_Acoustics',
+                            'Minke')
+class4_Rissos = os.path.join('Documents', 'EMEC', 'Acoustics', 'Data_Acoustics', 
+                             'RissosDolphin')
 
 # Load data for each class
-class1_features, class1_labels = load_data(class1_dir)
-class2_features, class2_labels = load_data(class2_dir)
-class3_features, class3_labels = load_data(class3_dir)
-class4_features, class4_labels = load_data(class4_dir)
+class1_features, class1_labels = load_data(class1_HP)
+class2_features, class2_labels = load_data(class2_PWS)
+class3_features, class3_labels = load_data(class3_Minke)
+class4_features, class4_labels = load_data(class4_Rissos)
 
 # Combine features and labels from all classes
-all_features = np.vstack([class1_features, class2_features, class3_features, class4_features])
-all_labels = np.hstack([class1_labels, class2_labels, class3_labels, class4_labels])
+all_features = np.vstack([class1_features, class2_features, class3_features, 
+                          class4_features])
+all_labels = np.hstack([class1_labels, class2_labels, class3_labels, 
+                        class4_labels])
 
 # Encode labels to numerical values
 label_encoder = LabelEncoder()
 encoded_labels = label_encoder.fit_transform(all_labels)
 
 # Split the data into training and testing sets
-X_train, X_test, y_train, y_test = train_test_split(all_features, encoded_labels, test_size=0.2, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(all_features, 
+                                                    encoded_labels, 
+                                                    test_size=0.2, 
+                                                    random_state=42)
 
 # Define the neural network model
 model = models.Sequential()
@@ -157,7 +168,8 @@ model.add(layers.Dense(128, activation='relu'))
 model.add(layers.Dense(4, activation='softmax'))
 
 # Compile the model
-model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
+model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', 
+              metrics=['accuracy'])
 
 # Train the model
 model.fit(X_train, y_train, epochs=50, batch_size=32, validation_data=(X_test, y_test))
@@ -169,6 +181,19 @@ print(f'Test accuracy: {test_acc}')
 # Save the model for future use
 model.save('audio_classifier_model.h5')
 
+
+
+
+# now use the model to predict marine life in the hydrophone recordings
+# ======================================================================
+
+# load the data
+hydroPh_records = os.path.join('Documents', 'EMEC', 'Acoustics', 'Data_Acoustics', 
+                          '3channel_sample_data_fromEMEC')
+
+hydroPh_data = load_data(hydroPh_records)
+
+predictions = model.predict(hydroPh_data)
 
 # Make sure to replace 'path/to/class1_dataset', 'path/to/class2_dataset', 'path/to/class3_dataset', 
 # and 'path/to/class4_dataset' with the actual paths to your datasets. 
