@@ -28,8 +28,8 @@ parameters = {'method':'request',
             'dpo_audioFormatConversion':1,
             'dpo_hydrophoneDataDiversionMode':'OD',
             'extension':'wav',                  # wav file
-            'dateFrom':'2015-06-01T00:00:00.000Z',  # The datetime of the first data point (From Date)
-            'dateTo':'2015-09-01T00:00:00.000Z'}    # The datetime of the last data point (To Date)
+            'dateFrom':'2015-10-13T00:00:00.000Z',  # The datetime of the first data point (From Date)
+            'dateTo':'2015-10-15T00:00:00.000Z'}    # The datetime of the last data point (To Date)
             #'dpo_qualityControl':1,             # The Quality Control data product option - See https://wiki.oceannetworks.ca/display/DP/1
             #'dpo_resample':'none',              # The Resampling data product option - See https://wiki.oceannetworks.ca/display/DP/1
             #'dpo_dataGaps':0}                   # The Data Gaps data product option - See https://wiki.oceannetworks.ca/display/DP/1
