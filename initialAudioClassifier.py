@@ -130,13 +130,13 @@ def load_data(directory):
     return features, labels
 
 # Directory paths for your datasets
-class1_HP = os.path.join('Documents', 'EMEC', 'Acoustics', 'Data_Acoustics', 
+class1_HP = os.path.join('Documents', 'EMEC', 'Acoustics', 'Data_Acoustics', 'SpeciesCalls', 
                          'HarbourPorpoise')
-class2_PWS = os.path.join('Documents', 'EMEC', 'Acoustics', 'Data_Acoustics', 
+class2_PWS = os.path.join('Documents', 'EMEC', 'Acoustics', 'Data_Acoustics', 'SpeciesCalls', 
                           'pacificWhiteSided')
-class3_Minke = os.path.join('Documents', 'EMEC', 'Acoustics', 'Data_Acoustics',
+class3_Minke = os.path.join('Documents', 'EMEC', 'Acoustics', 'Data_Acoustics', 'SpeciesCalls',
                             'Minke')
-class4_Rissos = os.path.join('Documents', 'EMEC', 'Acoustics', 'Data_Acoustics', 
+class4_Rissos = os.path.join('Documents', 'EMEC', 'Acoustics', 'Data_Acoustics', 'SpeciesCalls', 
                              'RissosDolphin')
 
 # Load data for each class
@@ -144,6 +144,15 @@ class1_features, class1_labels = load_data(class1_HP)
 class2_features, class2_labels = load_data(class2_PWS)
 class3_features, class3_labels = load_data(class3_Minke)
 class4_features, class4_labels = load_data(class4_Rissos)
+
+# print the length of each species' call (in sec) using librosa
+rootdir = os.path.join('Documents', 'EMEC', 'Acoustics', 'Data_Acoustics', 'SpeciesCalls')
+for subdir, dirs, files in os.walk(rootdir):
+    for file in files:
+        print(file)
+        if file.endswith(".wav"):
+            print(librosa.get_duration(path=os.path.join(subdir, file), sr=16000))
+
 
 # Combine features and labels from all classes
 all_features = np.vstack([class1_features, class2_features, class3_features, 
