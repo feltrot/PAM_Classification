@@ -129,15 +129,20 @@ def load_data(directory):
                 labels.append(class_label)
     return features, labels
 
-# Directory paths for your datasets
-class1_HP = os.path.join('Documents', 'EMEC', 'Acoustics', 'Data_Acoustics', 
-                         'HarbourPorpoise')
-class2_PWS = os.path.join('Documents', 'EMEC', 'Acoustics', 'Data_Acoustics', 
-                          'pacificWhiteSided')
-class3_Minke = os.path.join('Documents', 'EMEC', 'Acoustics', 'Data_Acoustics',
-                            'Minke')
-class4_Rissos = os.path.join('Documents', 'EMEC', 'Acoustics', 'Data_Acoustics', 
-                             'RissosDolphin')
+
+# if EMEC PC, then different paths to training data
+class1_HP = os.path.join('C:', 'Users', 'felix.trotter', 'OneDrive - The European Marine Energy Centre Ltd', 
+                         'Documents', 'Technical_Environment', 'Data_collection', 
+                         'animalSampleData', 'forRichard','HarbourPorpoise')
+class2_PWS = os.path.join('C:', 'Users', 'felix.trotter', 'OneDrive - The European Marine Energy Centre Ltd', 
+                          'Documents', 'Technical_Environment', 'Data_collection', 
+                          'animalSampleData', 'forRichard', 'pacificWhiteSided')
+class3_Minke = os.path.join('C:', 'Users', 'felix.trotter', 'OneDrive - The European Marine Energy Centre Ltd', 
+                            'Documents', 'Technical_Environment', 'Data_collection', 
+                            'animalSampleData', 'forRichard', 'Minke')
+class4_Rissos = os.path.join('C:', 'Users', 'felix.trotter', 'OneDrive - The European Marine Energy Centre Ltd', 
+                             'Documents', 'Technical_Environment', 'Data_collection', 
+                             'animalSampleData', 'forRichard', 'RissosDolphin')
 
 
 
