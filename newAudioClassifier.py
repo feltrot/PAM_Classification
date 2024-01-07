@@ -10,8 +10,21 @@
 # Below is a simple example using a CNN with the TensorFlow and Keras library. 
 # Make sure to install the required libraries if you haven't already
 
+## ================================================================================
 
-## 1) load modules
+
+
+## 1) Project description
+#-------------------------------------------
+
+
+
+
+
+
+
+
+## 2) load modules
 #-------------------------------------------
 import os
 import pathlib
@@ -62,7 +75,7 @@ commands = commands[(commands != 'README.md') & (commands != '.DS_Store')]
 print('Commands:', commands)
 
 
-## 2) Now we need to adapt the code from the tutorial to our project, identifying 
+## 3) Now we need to adapt the code from the tutorial to our project, identifying 
 #     marine mammal species underwater by their calls
 # --------------------------------------------------
 DATASET_PATH = os.path.join('Documents', 'EMEC', 'Acoustics', 'Data_Acoustics', 
