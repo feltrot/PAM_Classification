@@ -11,7 +11,14 @@
 
 
 
-## 1) model with one training dataset that is split into training and testing datsets
+## 1) Project description
+# ------------------------------------------------------------
+
+
+
+
+
+## 2) model with one training dataset that is split into training and testing datsets
 # -------------------------------------------------------------------------
 
 ## this model uses 1 entire dataset for audio signal classification
@@ -93,7 +100,7 @@ model.save('audio_classifier_model.h5')
 
 #################################################
 
-## 2) model where each class has its own dataset that are used as training
+## 3) model where each class has its own dataset that are used as training
 # to classify signals in a year audio signals 
 # -------------------------------------------------------------------------
 import os
