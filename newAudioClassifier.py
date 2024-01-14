@@ -90,9 +90,11 @@ print('Calls:', calls)
 # background noises from the species calls. it is important to know the frequencies
 # at which marine mammals communicate. According to research, mammal species around
 # Orkney communicate within the following frequencies:
+    
+    # Orca: 600 Hz - 29000 Hz
+    # Minke: 50 Hz - 9400 Hz
+    
 
-
-#ppt_list_of_maps = sorted(glob.glob(os.path.join(dir_cont_ppt, yy_join, '*tif')), key=last_6chars)
 
 # define the filter functions (based on this post: https://stackoverflow.com/questions/12093594/how-to-implement-band-pass-butterworth-filter-with-scipy-signal-butter/12233959#12233959)
 def butter_bandpass(lowcut, highcut, fs, order=5):
@@ -104,7 +106,7 @@ def butter_bandpass_filter(data, lowcut, highcut, fs, order=5):
     return y
 
 
-    # use files and dirs
+# use files and dirs
 
 
 # loop through each species
