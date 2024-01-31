@@ -112,7 +112,30 @@ def butter_bandpass_filter(data, lowcut, highcut, fs, order=5):
 # filtering is often done with the Fourier Transformation. A really useful 
 # tutorial and code to adapt is proviced by Tim Sainburg, a Postdoc at
 # @ Harvard studying Neuroscience, Ethology, Psychology, Anthropogeny, 
-# and Machine Learning 
+# and Machine Learning (https://timsainburg.com/noise-reduction-python.html)
+
+
+# Create fundtions that calculate the Fourier Transform (FFT) 
+# over the nosie audio clip
+
+# from https://stackoverflow.com/questions/33933842/how-to-generate-noise-in-frequency-range-with-numpy
+def fftnoise(f):
+    f = np.array(f, dtype="complex")
+    Np = (len(f) - 1) // 2
+    phases = np.random.rand(Np) * 2 * np.pi
+    phases = np.cos(phases) + 1j * np.sin(phases)
+    f[1 : Np + 1] *= phases
+    f[-1 : -1 - Np : -1] = np.conj(f[1 : Np + 1])
+    return np.fft.ifft(f).real
+
+
+def band_limited_noise(min_freq, max_freq, samples=1024, samplerate=1):
+    freqs = np.abs(np.fft.fftfreq(samples, 1 / samplerate))
+    f = np.zeros(samples)
+    f[np.logical_and(freqs >= min_freq, freqs <= max_freq)] = 1
+    return fftnoise(f)
+
+
 
 # load modules
 import numpy as np
@@ -183,26 +206,47 @@ for sp in freq_range["Species"]:
 
 
 
-        ## Get all audio wave files from subdirectories
-        wav_files = []
-        for root, dirs, files in os.walk(os.path.join(DATASET_PATH, sp)):
-            # ignore hidden folders and files
-            files = [f for f in files if not f[0] == '.']
-            dirs[:] = [d for d in dirs if not d[0] == '.']
-            print(root)
-            # loop through each file
-            for file in files:
-                print(file)
-                # if the file is a wav file, append it to the list created 
-                # before the firstloop
-                if file.endswith('.wav'):
-                    wav_files.append(os.path.join(root, file))
-                    wav_files.sort()
-                    wav_files = wav_files[(wav_files != '.DS_Store')]
+## Get all audio wave files from subdirectories
+for sp in freq_range['Species']:
+    wav_files = []
+    for root, dirs, files in os.walk(os.path.join(DATASET_PATH, sp)):
+        # ignore hidden folders and files
+        files = [f for f in files if not f[0] == '.']
+        dirs[:] = [d for d in dirs if not d[0] == '.']
+        print(root)
+        # loop through each file
+        for file in files:
+            print(file)
+            # if the file is a wav file, append it to the list created 
+            # before the firstloop
+            if file.endswith('.wav'):
+                wav_files.append(os.path.join(root, file))
+                wav_files.sort()
+                wav_files = wav_files[(wav_files != '.DS_Store')]
 
-        for wav_file in wav_files:
-            rate, data = wavfile.read(wav_file)
-            data = data / 32768
+    for wav_file in wav_files:
+        rate, data = wavfile.read(wav_file)
+        data = data / 32768
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
